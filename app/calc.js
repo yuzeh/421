@@ -1,4 +1,12 @@
 define(['math'], function (math) {
+
+  var SCORES;
+  var TRANSITIONS;
+  var SECOND_ROLL_OPTIONS; // 216 x 8 array of numbers
+  var BEST_SECOND_ROLL_OPTION; // 216 array of indices
+  var FIRST_ROLL_OPTIONS; // 216 x 8 array of numbers
+  var BEST_FIRST_ROLL_OPTION; // 216 array of indices
+
   // Convenience macros
   function set(m, ind, val) {
     if (ind.constructor === Array) {
@@ -17,10 +25,6 @@ define(['math'], function (math) {
   }
 
   function idiv(x, y) { return Math.floor(x / y); }
-
-  var SCORES;
-  var TRANSITIONS;
-  var TRANSITIONS_TIMES_SCORES;
 
   function diceToIndex(a, b, c) {
     return ((c - 1) * 6 + (b - 1)) * 6 + (a - 1);
@@ -42,11 +46,19 @@ define(['math'], function (math) {
     return index;
   }
 
+  function maskToString(a, b, c) {
+    var s = "";
+    s += a ? "1" : "0";
+    s += b ? "1" : "0";
+    s += c ? "1" : "0";
+    return s;
+  }
+
   function indexToMask(index) {
     return [
-      (index & (1 >> 0)) !== 0,
-      (index & (1 >> 1)) !== 0,
-      (index & (1 >> 2)) !== 0,
+      (index & (1 << 0)) !== 0,
+      (index & (1 << 1)) !== 0,
+      (index & (1 << 2)) !== 0,
     ];
   }
 
@@ -71,7 +83,7 @@ define(['math'], function (math) {
   function init() {
     initScores();
     initTransitions();
-    initProducts();
+    initCachedResults();
   }
 
   function initScores() {
@@ -116,32 +128,100 @@ define(['math'], function (math) {
     }
   }
 
-  function initProducts() {
-    TRANSITIONS_TIMES_SCORES = [];
+  function initCachedResults() {
+    var secondRollTable = [];
     for (var i = 0; i < 8; ++i) {
       var m = math.multiply(TRANSITIONS[i], SCORES);
-      TRANSITIONS_TIMES_SCORES.push(m);
+      secondRollTable.push(m);
+    }
+
+    SECOND_ROLL_OPTIONS = [];
+    BEST_SECOND_ROLL_OPTION = [];
+    var bestSecondRollScore = [];
+    for (var i = 0; i < 216; ++i) {
+      var roll = [];
+      var bestIndex = 0;
+      var bestScore = 0;
+      for (var j = 0; j < 8; ++j) {
+        var score = get(secondRollTable[j], i);
+        roll.push(score);
+
+        if (score > bestScore) {
+          bestIndex = j;
+          bestScore = score;
+        }
+      }
+
+      SECOND_ROLL_OPTIONS.push(roll);
+      BEST_SECOND_ROLL_OPTION.push(bestIndex);
+      bestSecondRollScore.push(bestScore);
+    }
+
+    var firstRollTable = [];
+    for (var i = 0; i < 8; ++i) {
+      var m = math.multiply(TRANSITIONS[i], bestSecondRollScore);
+      firstRollTable.push(m);
+    }
+
+    FIRST_ROLL_OPTIONS = [];
+    BEST_FIRST_ROLL_OPTION = [];
+    for (var i = 0; i < 216; ++i) {
+      var roll = [];
+      var bestIndex = 0;
+      var bestScore = 0;
+      for (var j = 0; j < 8; ++j) {
+        var score = get(firstRollTable[j], i);
+        if (j === 0) {
+          // Extra point for keeping on first roll
+          score += 1;
+        }
+        roll.push(score);
+
+        if (score > bestScore) {
+          bestIndex = j;
+          bestScore = score;
+        }
+      }
+
+      FIRST_ROLL_OPTIONS.push(roll);
+      BEST_FIRST_ROLL_OPTION.push(bestIndex);
     }
   }
 
-  function getBestChoiceSecondRoll(d1, d2, d3) {
+  function getSecondChoiceRolls(d1, d2, d3) {
     var index = diceToIndex(d1, d2, d3);
-    var bestIndex = 0;
-    var bestScore = 0;
+    var output = {};
+    var roll = SECOND_ROLL_OPTIONS[index];
     for (var i = 0; i < 8; ++i) {
-      var score = get(TRANSITIONS_TIMES_SCORES[i], index);
-      if (score > bestScore) {
-        bestIndex = i;
-        bestScore = score;
-      }
+      var mask = indexToMask(i);
+      var maskString = maskToString(mask[0], mask[1], mask[2]);
+      output[maskString] = roll[i];
     }
-    return [indexToMask(bestIndex), bestScore];
+    return output;
+  }
+
+  function getBestSecondChoiceRoll(d1, d2, d3) {
+    var index = diceToIndex(d1, d2, d3);
+    var roll = BEST_SECOND_ROLL_OPTION[index];
+    var mask = indexToMask(roll);
+    var expectedScore = SECOND_ROLL_OPTIONS[index][roll];
+    return [mask, expectedScore];
+  }
+
+  function getBestFirstRollChoice(d1, d2, d3) {
+    var index = diceToIndex(d1, d2, d3);
+    var roll = BEST_FIRST_ROLL_OPTION[index];
+    var mask = indexToMask(roll);
+    var expectedScore = FIRST_ROLL_OPTIONS[index][roll];
+    return [mask, expectedScore];
   }
 
   return {
     init: init,
     getTransition: function(i) { return TRANSITIONS[i]; },
     getScores: function() { return SCORES; },
-    getBestChoiceSecondRoll: getBestChoiceSecondRoll,
+    getSecondChoiceRolls: getSecondChoiceRolls,
+    getBestSecondChoiceRoll: getBestSecondChoiceRoll,
+    getBestFirstRollChoice: getBestFirstRollChoice,
   };
 })

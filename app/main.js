@@ -17,6 +17,11 @@ require(['jquery', 'app/calc'], function ($, calc) {
   var $s2 = $('#display2');
   var $s3 = $('#display3');
 
+  var $secondChoice = $('#second-roll-choice');
+  var $secondExpected = $('#second-roll-expected');
+  var $firstChoice = $('#first-roll-choice');
+  var $firstExpected = $('#first-roll-expected');
+
   calc.init();
 
   $('#submit').on('click', function() {
@@ -28,8 +33,34 @@ require(['jquery', 'app/calc'], function ($, calc) {
     $s2.html(String(d2));
     $s3.html(String(d3));
 
-    var bestChoiceSecond = calc.getBestChoiceSecondRoll(d1, d2, d3);
-    console.log(bestChoiceSecond);
+    var bestFirst = calc.getBestFirstRollChoice(d1, d2, d3);
+    var bestSecond = calc.getBestSecondChoiceRoll(d1, d2, d3);
+    $firstChoice.html(maskToFlavorText(bestFirst[0]));
+    $firstExpected.html(String(bestFirst[1]));
+    $secondChoice.html(maskToFlavorText(bestSecond[0]))
+    $secondExpected.html(String(bestSecond[1]));
+
   });
+
+  function maskToFlavorText(mask) {
+    var a = mask[0], b = mask[1], c = mask[2];
+    if (a && b && c) {
+      return 'all of them';
+    } else if (a && b && !c) {
+      return 'both first and second';
+    } else if (a && !b && c) {
+      return 'both first and third';
+    } else if (a && !b && !c) {
+      return 'just the first one';
+    } else if (!a && b && c) {
+      return 'both second and third';
+    } else if (!a && b && !c) {
+      return 'just the second one';
+    } else if (!a && !b && c) {
+      return 'just the third one';
+    } else {
+      return 'none of them';
+    }
+  }
 
 });
