@@ -143,12 +143,12 @@ define(['math'], function (math) {
       var bestIndex = 0;
       var bestScore = 0;
       for (var j = 0; j < 8; ++j) {
-        var score = get(secondRollTable[j], i);
-        roll.push(score);
+        var s = get(secondRollTable[j], i);
+        roll.push(s);
 
-        if (score > bestScore) {
+        if (s > bestScore) {
           bestIndex = j;
-          bestScore = score;
+          bestScore = s;
         }
       }
 
@@ -170,16 +170,17 @@ define(['math'], function (math) {
       var bestIndex = 0;
       var bestScore = 0;
       for (var j = 0; j < 8; ++j) {
-        var score = get(firstRollTable[j], i);
+        var s = get(firstRollTable[j], i);
         if (j === 0) {
           // Extra point for keeping on first roll
-          score += 1;
+          var dice = indexToDice(i);
+          s = 1 + score(dice[0], dice[1], dice[2]);
         }
-        roll.push(score);
+        roll.push(s);
 
-        if (score > bestScore) {
+        if (s > bestScore) {
           bestIndex = j;
-          bestScore = score;
+          bestScore = s;
         }
       }
 
