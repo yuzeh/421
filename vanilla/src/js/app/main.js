@@ -14,28 +14,28 @@ requirejs.config({
 require(['jquery', 'app/calc'], function ($, calc) {
   var DIE_TO_IMAGE = {
     1: {
-      large: '/images/die-1-large.png',
-      small: '/images/die-1.png',
+      large: 'images/die-1-large.png',
+      small: 'images/die-1.png',
     },
     2: {
-      large: '/images/die-2-large.png',
-      small: '/images/die-2.png',
+      large: 'images/die-2-large.png',
+      small: 'images/die-2.png',
     },
     3: {
-      large: '/images/die-3-large.png',
-      small: '/images/die-3.png',
+      large: 'images/die-3-large.png',
+      small: 'images/die-3.png',
     },
     4: {
-      large: '/images/die-4-large.png',
-      small: '/images/die-4.png',
+      large: 'images/die-4-large.png',
+      small: 'images/die-4.png',
     },
     5: {
-      large: '/images/die-5-large.png',
-      small: '/images/die-5.png',
+      large: 'images/die-5-large.png',
+      small: 'images/die-5.png',
     },
     6: {
-      large: '/images/die-6-large.png',
-      small: '/images/die-6.png',
+      large: 'images/die-6-large.png',
+      small: 'images/die-6.png',
     },
   };
 
