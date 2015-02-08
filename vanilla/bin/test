@@ -1,0 +1,4 @@
+#!/usr/bin/env zsh
+pushd dist
+python -m SimpleHTTPServer
+popd dist

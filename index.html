@@ -1,69 +1,7 @@
 <html>
   <head>
-    <title>421 Simulator</title>
-    <style>
-      .bigdie {
-        font-size: 30pt;
-      }
-    </style>
-    <script data-main="app/main" src="lib/requirejs/require.js"></script>
+    <script>
+      document.location.href = '/421/vanilla/dist/';
+    </script>
   </head>
-  <body>
-    <div>421 Simulator</div>
-    <div>
-      <div>Select your dice:</div>
-      <div>
-        <select id="die1" class="bigdie">
-          <option value="1" class="bigdie">1</option>
-          <option value="2" class="bigdie">2</option>
-          <option value="3" class="bigdie">3</option>
-          <option value="4" class="bigdie">4</option>
-          <option value="5" class="bigdie">5</option>
-          <option value="6" class="bigdie">6</option>
-        </select>
-
-        <select id="die2">
-          <option value="1">1</option>
-          <option value="2">2</option>
-          <option value="3">3</option>
-          <option value="4">4</option>
-          <option value="5">5</option>
-          <option value="6">6</option>
-        </select>
-
-        <select id="die3">
-          <option value="1">1</option>
-          <option value="2">2</option>
-          <option value="3">3</option>
-          <option value="4">4</option>
-          <option value="5">5</option>
-          <option value="6">6</option>
-        </select>
-
-        <button id="submit">Submit</button>
-      </div>
-    </div>
-    <hr />
-    <div>
-      <table>
-        <thead>
-          <td>If you got <span id="display1" class="bigdie">1</span>-<span id="display2">1</span>-<span id="display3">1</span> on your...</td>
-          <td>You should roll...</td>
-          <td>Which gives you an expected score of...</td>
-        </thead>
-        <tbody>
-          <tr>
-            <td>first roll</td>
-            <td id="first-roll-choice">None!</td>
-            <td id="first-roll-expected">8</td>
-          </tr>
-          <tr>
-            <td>second roll</td>
-            <td id="second-roll-choice">None!</td>
-            <td id="second-roll-expected">7</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </body>
 </html>

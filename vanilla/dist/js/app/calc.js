@@ -1,4 +1,4 @@
-define(['math'], function (math) {
+define(['math', 'app/rules'], function (math, rules) {
 
   var SCORES;
   var TRANSITIONS;
@@ -80,10 +80,13 @@ define(['math'], function (math) {
     }
   }
 
-  function init() {
+  function init(callback) {
     initScores();
     initTransitions();
     initCachedResults();
+    if (callback) {
+      callback();
+    }
   }
 
   function initScores() {
@@ -201,7 +204,7 @@ define(['math'], function (math) {
     return output;
   }
 
-  function getBestSecondChoiceRoll(d1, d2, d3) {
+  function getBestSecondRollChoice(d1, d2, d3) {
     var index = diceToIndex(d1, d2, d3);
     var roll = BEST_SECOND_ROLL_OPTION[index];
     var mask = indexToMask(roll);
@@ -222,7 +225,7 @@ define(['math'], function (math) {
     getTransition: function(i) { return TRANSITIONS[i]; },
     getScores: function() { return SCORES; },
     getSecondChoiceRolls: getSecondChoiceRolls,
-    getBestSecondChoiceRoll: getBestSecondChoiceRoll,
+    getBestSecondRollChoice: getBestSecondRollChoice,
     getBestFirstRollChoice: getBestFirstRollChoice,
   };
 })

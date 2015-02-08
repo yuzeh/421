@@ -1,0 +1,58 @@
+<html>
+  <head>
+    <title>421 Simulator</title>
+    <style>
+      .bigdie {
+        font-size: 20pt;
+      }
+    </style>
+    <link href="/lib/bootstrap/bootstrap.css" rel="stylesheet" />
+    <script data-main="js/app/main" src="/lib/requirejs/require.js"></script>
+  </head>
+  <body>
+    <div class="jumbotron">
+      <h1>421</h1>
+      <p>The calculator for the bastard child of Yahtzee.</p>
+    </div>
+    <div class="content">
+      <div class="col-xs-12">
+        <div class="row">
+          <div class="col-xs-3"></div>
+          <div class="col-xs-2"><img id="die-image-1" src="/images/die-2-large.png" data-die-value="2"/></div>
+          <div class="col-xs-2"><img id="die-image-2" src="/images/die-4.png" data-die-value="4"/></div>
+          <div class="col-xs-2"><img id="die-image-3" src="/images/die-1.png" data-die-value="1"/></div>
+          <div class="col-xs-3"></div>
+        </div>
+
+        <hr />
+
+        <table class="table">
+          <caption>When you roll a
+            <strong class="die-num-1">2</strong> -
+            <strong class="die-num-2">4</strong> -
+            <strong class="die-num-3">1</strong>
+            (big <strong class="die-num-1">2</strong>)...</caption>
+          <thead>
+            <tr>
+              <th>On what roll?</th>
+              <th>Reroll...</th>
+              <th><em>E[</em>score<em>]</em></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">First</th>
+              <td id="first-reroll">Nothing</td>
+              <td id="first-expected">11</td>
+            </tr>
+            <tr>
+              <th scope="row">Second</th>
+              <td id="second-reroll">Nothing</td>
+              <td id="second-expected">10</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </body>
+</html>
