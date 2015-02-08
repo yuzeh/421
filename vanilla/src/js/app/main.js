@@ -1,10 +1,10 @@
 requirejs.config({
-  baseUrl: 'lib',
+  baseUrl: '../',
   paths: {
-    app: '../js/app',
-    jquery: 'jquery/jquery',
-    bootstrap: 'bootstrap/bootstrap',
-    math: 'mathjs/math.min',
+    app: 'js/app',
+    jquery: 'lib/jquery/jquery',
+    bootstrap: 'lib/bootstrap/bootstrap',
+    math: 'lib/mathjs/math.min',
   },
   shim: {
     'bootstrap': ['jquery'],

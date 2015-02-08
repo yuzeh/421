@@ -8,13 +8,14 @@ module.exports = function (grunt) {
 
     paths: {
       src: 'src',
+      build: 'build', // Path for JavaScript and CSS before it is run through the r.js optimzer.
       dist: 'dist',
     },
 
     bower: {
       install: {
         options: {
-          targetDir: '<%= paths.dist %>/lib',
+          targetDir: '<%= paths.build %>/lib',
         },
       },
     },
@@ -25,7 +26,14 @@ module.exports = function (grunt) {
         flatten: false,
         cwd: '<%= paths.src %>/js',
         src: ['**/*.js'],
-        dest: '<%= paths.dist %>/js',
+        dest: '<%= paths.build %>/js',
+      },
+      css: {
+        expand: true,
+        flatten: false,
+        cwd: '<%= paths.build %>',
+        src: ['**/*.css'],
+        dest: '<%= paths.dist %>',
       },
       html: {
         expand: true,
@@ -40,6 +48,21 @@ module.exports = function (grunt) {
         cwd: '<%= paths.src %>/images',
         src: ['**/*.*'],
         dest: '<%= paths.dist %>/images',
+      },
+      requirejs: {
+        dest: '<%= paths.dist %>/js/require.js',
+        src: '<%= paths.build %>/lib/requirejs/require.js',
+      },
+    },
+
+    requirejs: {
+      compile: {
+        options: {
+          baseUrl: '<%= paths.build %>',
+          mainConfigFile: '<%= paths.build %>/js/app/main.js',
+          name: 'js/app/main',
+          out: '<%= paths.dist %>/js/421.js',
+        },
       },
     },
 
@@ -59,8 +82,9 @@ module.exports = function (grunt) {
     },
   });
 
-  grunt.registerTask('default', ['bower', 'copy', 'watch']);
-  grunt.registerTask('build-js', ['copy:js']);
+  grunt.registerTask('build-css', ['copy:css']);
+  grunt.registerTask('build-js', ['copy:js', 'copy:requirejs', 'requirejs']);
   grunt.registerTask('build-html', ['copy:html']);
   grunt.registerTask('build-images', ['copy:images']);
+  grunt.registerTask('default', ['bower', 'build-css', 'build-images', 'build-html', 'build-js', 'watch']);
 };
