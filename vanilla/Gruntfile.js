@@ -87,5 +87,7 @@ module.exports = function (grunt) {
   grunt.registerTask('build-js', ['copy:js', 'copy:requirejs', 'requirejs']);
   grunt.registerTask('build-html', ['copy:html']);
   grunt.registerTask('build-images', ['copy:images']);
-  grunt.registerTask('default', ['bower', 'build-css', 'build-images', 'build-html', 'build-js', 'watch']);
+  grunt.registerTask('build', ['bower', 'build-css', 'build-images', 'build-html', 'build-js']);
+
+  grunt.registerTask('default', ['build', 'watch']);
 };
