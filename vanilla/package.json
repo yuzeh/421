@@ -2,7 +2,7 @@
   "name": "421",
   "version": "0.0.1",
   "homepage": "http://yuzeh.github.io/421",
-  "description": "4-2-1 simulator.",
+  "description": "4-2-1 simulator (vanilla JavaScript)",
   "author": "Dan Huang <delta1080@gmail.com>",
   "private": true,
   "devDependencies": {
