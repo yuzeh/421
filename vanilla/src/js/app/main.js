@@ -93,6 +93,13 @@ require(['jquery', 'app/calc'], function ($, calc) {
     $('#second-expected').text(round(results.second.expected));
   }
 
+  function resultToOut(result) {
+    return {
+      mask: result[0],
+      expected: result[1],
+    };
+  }
+
   function recomputeBestChoices() {
     var dice = getDice();
     var a = dice[0];
@@ -100,13 +107,6 @@ require(['jquery', 'app/calc'], function ($, calc) {
     var c = dice[2];
     var firstResult = calc.getBestFirstRollChoice(a, b, c);
     var secondResult = calc.getBestSecondRollChoice(a, b, c);
-
-    function resultToOut(result) {
-      return {
-        mask: result[0],
-        expected: result[1],
-      };
-    }
 
     return {
       first: resultToOut(firstResult),

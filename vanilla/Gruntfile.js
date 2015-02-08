@@ -58,6 +58,7 @@ module.exports = function (grunt) {
     requirejs: {
       compile: {
         options: {
+          optimize: 'none', // Comment this out when doing production release
           baseUrl: '<%= paths.build %>',
           mainConfigFile: '<%= paths.build %>/js/app/main.js',
           name: 'js/app/main',
