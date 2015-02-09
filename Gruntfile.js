@@ -2,10 +2,12 @@ module.exports = function (grunt) {
 
   require("matchdep").filterDev("grunt-*").forEach(grunt.loadNpmTasks);
 
+
   grunt.initConfig({
     subgrunt: {
       projects: {
         vanilla: 'build',
+        react: 'build',
       },
     },
 
@@ -21,7 +23,14 @@ module.exports = function (grunt) {
         cwd: 'vanilla/dist',
         src: ['**/*.*'],
         dest: 'dist/vanilla',
-      }
+      },
+
+      react: {
+        expand: true,
+        cwd: 'react/dist',
+        src: ['**/*.*'],
+        dest: 'dist/react',
+      },
     },
 
     'gh-pages': {
