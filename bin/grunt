@@ -1,2 +1,2 @@
 #!/usr/bin/env zsh
-"${0%/*}/../node_modules/grunt-cli/bin/grunt" $*
+"${0%/*}/../node_modules/.bin/grunt" $*

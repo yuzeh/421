@@ -8,16 +8,10 @@
   "devDependencies": {
     "bower": "*",
     "grunt": "~0.4.2",
-    "grunt-bower-requirejs": "^2.0.0",
     "grunt-bower-task": "^0.4.0",
     "grunt-cli": "*",
-    "grunt-contrib-concat": "*",
     "grunt-contrib-copy": "*",
-    "grunt-contrib-imagemin": "*",
-    "grunt-contrib-jade": "*",
-    "grunt-contrib-less": "*",
     "grunt-contrib-requirejs": "^0.4.4",
-    "grunt-contrib-uglify": "*",
     "grunt-contrib-watch": "*",
     "matchdep": "*"
   },

@@ -11,8 +11,11 @@ module.exports = function (grunt) {
 
     copy: {
       index: {
-        'dist/index.html': 'index.html',
+        files: {
+          'dist/index.html': 'index.html',
+        },
       },
+
       vanilla: {
         expand: true,
         cwd: 'vanilla/dist',
@@ -29,5 +32,6 @@ module.exports = function (grunt) {
     },
   });
 
-  grunt.registerTask('default', ['subgrunt', 'copy', 'gh-pages']);
+  grunt.registerTask('default', ['subgrunt', 'copy']);
+  grunt.registerTask('deploy', ['default', 'gh-pages']);
 };
